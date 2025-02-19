@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\LEAGUEv0\\opggApi\\opggApi.csproj": {}
+    "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\LEAGUEv0\\opggApi\\opggApi.csproj": {
+    "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\LEAGUEv0\\opggApi\\opggApi.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj",
         "projectName": "opggApi",
-        "projectPath": "C:\\Users\\user\\Desktop\\LEAGUEv0\\opggApi\\opggApi.csproj",
+        "projectPath": "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\LEAGUEv0\\opggApi\\obj\\",
+        "outputPath": "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
