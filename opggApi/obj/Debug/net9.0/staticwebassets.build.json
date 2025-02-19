@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "advY8jHpXl6BrEpRdB+MwCYo0JPVM7Cn61R7Qr5KDts=",
+  "Source": "opggApi",
+  "BasePath": "_content/opggApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
