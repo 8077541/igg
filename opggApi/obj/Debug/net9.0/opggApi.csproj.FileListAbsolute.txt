@@ -32,3 +32,4 @@ C:\Users\user\Downloads\gh\LEAGUEv0\opggApi\obj\Debug\net9.0\refint\opggApi.dll
 C:\Users\user\Downloads\gh\LEAGUEv0\opggApi\obj\Debug\net9.0\opggApi.pdb
 C:\Users\user\Downloads\gh\LEAGUEv0\opggApi\obj\Debug\net9.0\opggApi.genruntimeconfig.cache
 C:\Users\user\Downloads\gh\LEAGUEv0\opggApi\obj\Debug\net9.0\ref\opggApi.dll
+C:\Users\user\Downloads\gh\LEAGUEv0\opggApi\bin\Debug\net9.0\Scalar.AspNetCore.dll

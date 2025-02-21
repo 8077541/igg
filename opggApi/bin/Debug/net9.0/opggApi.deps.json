@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v9.0": {
       "opggApi/1.0.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.OpenApi": "9.0.0"
+          "Microsoft.AspNetCore.OpenApi": "9.0.0",
+          "Scalar.AspNetCore": "2.0.16"
         },
         "runtime": {
           "opggApi.dll": {}
@@ -30,6 +31,14 @@
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
             "assemblyVersion": "1.6.17.0",
             "fileVersion": "1.6.17.0"
+          }
+        }
+      },
+      "Scalar.AspNetCore/2.0.16": {
+        "runtime": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "assemblyVersion": "2.0.16.0",
+            "fileVersion": "2.0.16.0"
           }
         }
       }
@@ -54,6 +63,13 @@
       "sha512": "sha512-Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA==",
       "path": "microsoft.openapi/1.6.17",
       "hashPath": "microsoft.openapi.1.6.17.nupkg.sha512"
+    },
+    "Scalar.AspNetCore/2.0.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-E2WdQ2KzSdpZNxb35CaEJSo5ysf2TKGFS5l46mD7U0tp4eDxoW4Ad3WX4/GrzpfcsL4xgAH0r2Zih+QxAJ0UWQ==",
+      "path": "scalar.aspnetcore/2.0.16",
+      "hashPath": "scalar.aspnetcore.2.0.16.nupkg.sha512"
     }
   }
 }

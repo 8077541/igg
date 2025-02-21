@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using opggApi.Dtos.Profile;
 using opggApi.Interfaces;
+using opggApi.Mappers;
 using opggApi.Models;
 using opggApi.Services;
 
@@ -41,19 +42,53 @@ namespace opggApi.Repositories
             return accountModel;
         }
 
-        public Task<List<LeagueEntryDto>> GetRankeds(SummonerDto summoner, string region)
+        public async Task<SummonerDto> GetSummoner(AccountDto account, string region)
         {
-            throw new NotImplementedException();
+            var riotApi = _apiKeyService.ApiKey;
+            var response = await _httpClient.GetAsync(
+                $"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{account.Puuid}?api_key={riotApi}"
+            );
+            var summonerModel =
+                await response.Content.ReadFromJsonAsync<SummonerDto>()
+                ?? throw new Exception("Summoner not found");
+            return summonerModel;
         }
 
-        public Task<SummonerDto> GetSummoner(AccountDto account, string region)
+        public async Task<List<LeagueEntryDto>> GetRankeds(SummonerDto summoner, string region)
         {
-            throw new NotImplementedException();
+            var riotApi = _apiKeyService.ApiKey;
+            var response = await _httpClient.GetAsync(
+                $"https://{region}.api.riotgames.com/lol/league/v4/entries/by-summoner/{summoner.Id}?api_key={riotApi}"
+            );
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Rankeds not found");
+            }
+            var leagueEntryModel = await response.Content.ReadFromJsonAsync<List<LeagueEntryDto>>();
+            if (leagueEntryModel == null)
+            {
+                throw new Exception("Rankeds not found");
+            }
+            return leagueEntryModel;
         }
 
         public Task<ProfileModel> UpdateProfile(ProfileModel profile)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ProfileModel> GetFullProfile(
+            string gameName,
+            string tagLine,
+            string region
+        )
+        {
+            var account = await GetPuuid(gameName, tagLine);
+            var summoner = await GetSummoner(account, region);
+            var rankeds = await GetRankeds(summoner, region);
+            var profile = ProfileMapper.DtoToProfile(account, summoner);
+            profile = ProfileMapper.LeagueEntryToProfile(profile, rankeds);
+            return profile;
         }
     }
 }

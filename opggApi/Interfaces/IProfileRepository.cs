@@ -15,6 +15,7 @@ namespace opggApi.Interfaces
         Task<SummonerDto> GetSummoner(AccountDto account, string region);
         Task<List<LeagueEntryDto>> GetRankeds(SummonerDto summoner, string region);
         Task<ProfileModel> UpdateProfile(ProfileModel profile);
+        Task<ProfileModel> GetFullProfile(string gameName, string tagLine, string region);
     }
 }
 //TEST COMMENT
