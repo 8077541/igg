@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace opggApi.Dtos
+namespace opggApi.Dtos.Match
 {
     public class MatchIdsDto
     {
