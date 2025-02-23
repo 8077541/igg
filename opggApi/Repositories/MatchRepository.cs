@@ -10,10 +10,12 @@ using opggApi.Services;
 
 namespace opggApi.Repositories
 {
-    public class MatchRepository(HttpClient httpClient, ApiKeyService apiKeyService) : IMatchRepository
+    public class MatchRepository(HttpClient httpClient, ApiKeyService apiKeyService)
+        : IMatchRepository
     {
         private readonly ApiKeyService _apiKeyService = apiKeyService;
         private readonly HttpClient _httpClient = httpClient;
+
         public async Task<MatchModel> GetMatch(string matchId)
         {
             var riotApi = _apiKeyService.ApiKey;
