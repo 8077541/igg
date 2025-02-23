@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace opggApi.Dtos.Matches
+namespace opggApi.Dtos.Match
 {
     public class MetadataDto
     {
