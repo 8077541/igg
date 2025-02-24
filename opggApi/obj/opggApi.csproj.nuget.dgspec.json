@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\amogus\\Desktop\\lkl\\igg\\opggApi\\opggApi.csproj": {}
+    "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\amogus\\Desktop\\lkl\\igg\\opggApi\\opggApi.csproj": {
+    "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\amogus\\Desktop\\lkl\\igg\\opggApi\\opggApi.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj",
         "projectName": "opggApi",
-        "projectPath": "C:\\Users\\amogus\\Desktop\\lkl\\igg\\opggApi\\opggApi.csproj",
-        "packagesPath": "C:\\Users\\amogus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\amogus\\Desktop\\lkl\\igg\\opggApi\\obj\\",
+        "projectPath": "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\opggApi.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Downloads\\gh\\LEAGUEv0\\opggApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\amogus\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

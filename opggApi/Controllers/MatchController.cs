@@ -26,6 +26,7 @@ namespace opggApi.Controllers
                 return BadRequest(e.Message);
             }
         }
+
         [HttpGet("getMatchIds")]
         public async Task<IActionResult> GetMatchIds(string puuid)
         {
@@ -39,6 +40,5 @@ namespace opggApi.Controllers
                 return BadRequest(e.Message);
             }
         }
-
     }
 }
