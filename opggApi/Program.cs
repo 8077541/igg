@@ -24,6 +24,7 @@ builder.Services.AddSingleton(new ApiKeyService(apiKey));
 // Register IProfileRepository and its implementation
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+builder.Services.AddScoped<IRuneRepository, RuneRepository>();
 
 // Register ProfileController with a scoped lifetime
 
