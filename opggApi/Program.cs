@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using opggApi.Controllers;
+using opggApi.Data;
 using opggApi.Interfaces;
 using opggApi.Repositories; // Assuming the implementation is in this namespace
 using opggApi.Services;
@@ -25,9 +27,22 @@ builder.Services.AddSingleton(new ApiKeyService(apiKey));
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 builder.Services.AddScoped<IRuneRepository, RuneRepository>();
+builder.Services.AddScoped<ISpellRepository, SpellRepository>();
 
 // Register ProfileController with a scoped lifetime
-
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddCors(p =>
+    p.AddPolicy(
+        "corspolicy",
+        build =>
+        {
+            build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+        }
+    )
+);
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

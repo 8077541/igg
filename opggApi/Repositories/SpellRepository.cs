@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using opggApi.Dtos.Spell;
 using opggApi.Interfaces;
+using opggApi.Mappers;
 using opggApi.Models;
 
 namespace opggApi.Repositories
@@ -32,8 +34,10 @@ namespace opggApi.Repositories
                 "https://ddragon.leagueoflegends.com/cdn/15.4.1/data/en_US/summoner.json"
             );
             response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-
+            var content =
+                await response.Content.ReadFromJsonAsync<SpellResponseDto>()
+                ?? throw new Exception("Error");
+            var spells = SpellMapper.MapSpellDtosToSpellModels([.. content.Data.Values]);
             // TODO: Create a mapper to map the content to a list of SpellModel objects
 
             return spells;

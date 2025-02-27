@@ -9,18 +9,23 @@ namespace opggApi.Mappers
 {
     public class SpellMapper
     {
-        public List<SpellModel> MapSpellDtosToSpellModels(SpellDto spellDto)
+        public static List<SpellModel> MapSpellDtosToSpellModels(List<SpellDto> spellDto)
         {
             List<SpellModel> spellModels = new List<SpellModel>();
 
-            SpellModel spellModel = new SpellModel();
-            spellModel.Name = spellDto.Name;
-            spellModel.Description = spellDto.Description;
-            spellModel.Cooldown = spellDto.Cooldown;
-            spellModel.Tooltip = spellDto.Tooltip;
-            spellModel.Range = spellDto.Range;
-            spellModel.FullImage = spellDto.Image.Full;
-            spellModel.SpriteImage = spellDto.Image.Sprite;
+            foreach (var spell in spellDto)
+            {
+                SpellModel spellModel = new SpellModel();
+                spellModel.Name = spell.Name;
+                spellModel.Description = spell.Description;
+                spellModel.Cooldown = spell.Cooldown;
+                spellModel.Tooltip = spell.Tooltip;
+                spellModel.Range = spell.Range;
+                spellModel.FullImage = spell.Image.Full;
+                spellModel.SpriteImage = spell.Image.Sprite;
+
+                spellModels.Add(spellModel);
+            }
 
             return spellModels;
         }
