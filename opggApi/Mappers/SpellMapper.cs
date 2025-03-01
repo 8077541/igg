@@ -23,6 +23,7 @@ namespace opggApi.Mappers
                 spellModel.Range = spell.Range;
                 spellModel.FullImage = spell.Image.Full;
                 spellModel.SpriteImage = spell.Image.Sprite;
+                spellModel.Key = Convert.ToInt32(spell.Key);
 
                 spellModels.Add(spellModel);
             }

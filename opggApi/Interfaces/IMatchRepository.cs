@@ -11,5 +11,7 @@ namespace opggApi.Interfaces
     {
         Task<List<string>> GetMatchIds(string puuid);
         Task<MatchModel> GetMatch(string matchId);
+        Task<MatchModel> AddMatchToDb(MatchModel match);
+        Task<MatchModel> GetMatchFromDb(string matchId);
     }
 }

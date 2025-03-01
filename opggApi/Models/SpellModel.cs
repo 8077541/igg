@@ -9,9 +9,10 @@ namespace opggApi.Models
     public class SpellModel
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public int Key { get; set; }
 
-        public string ParticipantId { get; set; }
+        public int ParticipantId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Tooltip { get; set; }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using opggApi.Data;
 using opggApi.Dtos.Profile;
 using opggApi.Interfaces;
 using opggApi.Mappers;
@@ -10,20 +12,35 @@ using opggApi.Services;
 
 namespace opggApi.Repositories
 {
-    public class ProfileRepository(HttpClient httpClient, ApiKeyService apiKeyService)
-        : IProfileRepository
+    public class ProfileRepository(
+        HttpClient httpClient,
+        ApiKeyService apiKeyService,
+        ApplicationDbContext context
+    ) : IProfileRepository
     {
         private readonly ApiKeyService _apiKeyService = apiKeyService;
         private readonly HttpClient _httpClient = httpClient;
+        private readonly ApplicationDbContext _context = context;
 
-        public Task<ProfileModel> AddProfileToDb(ProfileModel profile)
+        public async Task<ProfileModel> AddProfileToDb(ProfileModel profile)
         {
-            throw new NotImplementedException();
+            _context.ProfileModel.Add(profile);
+            await _context.SaveChangesAsync();
+            return profile;
         }
 
-        public Task<ProfileModel> GetProfileFromDb(string gameName, string tagLine)
+        public async Task<ProfileModel> GetProfileFromDb(string gameName, string tagLine)
         {
-            throw new NotImplementedException();
+            var profile = await _context
+                .ProfileModel.Where(p => p.GameName == gameName && p.TagLine == tagLine)
+                .FirstOrDefaultAsync();
+
+            if (profile == null)
+            {
+                return null;
+            }
+
+            return profile;
         }
 
         public async Task<AccountDto> GetPuuid(string gameName, string tagLine)

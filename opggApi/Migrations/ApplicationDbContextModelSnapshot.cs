@@ -409,8 +409,11 @@ namespace opggApi.Migrations
 
             modelBuilder.Entity("opggApi.Models.SpellModel", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.PrimitiveCollection<string>("Cooldown")
                         .IsRequired()
@@ -424,13 +427,18 @@ namespace opggApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Key")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ParticipantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ParticipantId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParticipantModelId")
+                        .HasColumnType("int");
 
                     b.PrimitiveCollection<string>("Range")
                         .IsRequired()
@@ -446,6 +454,8 @@ namespace opggApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParticipantModelId");
+
                     b.ToTable("SpellModel");
                 });
 
@@ -456,9 +466,21 @@ namespace opggApi.Migrations
                         .HasForeignKey("MatchModelMatchId");
                 });
 
+            modelBuilder.Entity("opggApi.Models.SpellModel", b =>
+                {
+                    b.HasOne("opggApi.Models.ParticipantModel", null)
+                        .WithMany("Spells")
+                        .HasForeignKey("ParticipantModelId");
+                });
+
             modelBuilder.Entity("opggApi.Models.MatchModel", b =>
                 {
                     b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("opggApi.Models.ParticipantModel", b =>
+                {
+                    b.Navigation("Spells");
                 });
 #pragma warning restore 612, 618
         }

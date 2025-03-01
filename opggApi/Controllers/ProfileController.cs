@@ -64,15 +64,16 @@ namespace opggApi.Controllers
             string region
         )
         {
-            try
+            var profileFromDb = await _profileRepository.GetProfileFromDb(gameName, tagLine);
+            if (profileFromDb != null)
             {
-                var profile = await _profileRepository.GetFullProfile(gameName, tagLine, region);
-                return Ok(profile);
+                return Ok(profileFromDb);
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+
+            var fullProfile = await _profileRepository.GetFullProfile(gameName, tagLine, region);
+            await _profileRepository.AddProfileToDb(fullProfile);
+
+            return Ok(fullProfile);
         }
     }
 }
