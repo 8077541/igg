@@ -165,13 +165,22 @@ function ProfilePage() {
   const region = searchParams.get("region") || "kr"
 
   useEffect(() => {
-    // In a real app, you would fetch data from an API here
-    setProfile({
-      ...mockProfile,
-      username: username || mockProfile.username,
-      tag: tag || mockProfile.tag,
-      region: region.toUpperCase(),
-    })
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5011/getFullProfile?gameName=${username}&tagLine=${tag}&region=${region}1`
+        )
+
+        const data = await response.json()
+        data.recentMatches = mockProfile.recentMatches
+        setProfile(data)
+        console.log(data)
+      } catch (error) {
+        console.error("Error fetching profile:", error)
+      }
+    }
+
+    fetchProfile()
   }, [username, tag, region])
 
   if (!profile) {
@@ -226,10 +235,10 @@ function ProfilePage() {
             {/* Summoner Info Card */}
             <div className="summoner-card">
               <div className="summoner-header">
-                <div className="avatar">{profile.username.charAt(0).toUpperCase()}</div>
+                <div className="avatar">{profile.gameName.charAt(0).toUpperCase()}</div>
                 <div className="summoner-details">
-                  <h1 className="summoner-name">{profile.username}</h1>
-                  <div className="summoner-tag">#{profile.tag}</div>
+                  <h1 className="summoner-name">{profile.gameName}</h1>
+                  <div className="summoner-tag">#{profile.tagLine}</div>
                   <div className="summoner-region">{profile.region}</div>
                 </div>
               </div>
@@ -248,7 +257,7 @@ function ProfilePage() {
                     <path d="M18 16.36v-1.36a4 4 0 0 0-4-4h-4a4 4 0 0 0-4 4v1.36"></path>
                     <path d="M12 12A4 4 0 0 0 12 4a4 4 0 0 0 0 8Z"></path>
                   </svg>
-                  <span>Level {profile.level}</span>
+                  <span>Level {profile.summonerLevel}</span>
                 </div>
                 <div className="stat-item">
                   <svg
@@ -270,8 +279,8 @@ function ProfilePage() {
                     <path d="M1 12h4"></path>
                     <path d="M4.929 4.929l2.829 2.829"></path>
                   </svg>
-                  <span className={`rank ${getRankColor(profile.rank.tier)}`}>
-                    {profile.rank.tier} {profile.rank.division} ({profile.rank.lp} LP)
+                  <span className={`rank ${getRankColor(profile.soloTier)}`}>
+                    {profile.soloTier} {profile.soloRank} ({profile.soloLeaguePoints} LP)
                   </span>
                 </div>
               </div>

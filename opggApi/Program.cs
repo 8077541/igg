@@ -50,7 +50,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
+app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 
 // Map controllers
