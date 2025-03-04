@@ -59,9 +59,9 @@ namespace opggApi.Controllers
 
         [HttpGet("getFullProfile")]
         public async Task<IActionResult> GetFullProfile(
-            string gameName,
-            string tagLine,
-            string region
+            [FromQuery] string gameName,
+            [FromQuery] string tagLine,
+            [FromQuery] string region
         )
         {
             var profileFromDb = await _profileRepository.GetProfileFromDb(gameName, tagLine);
