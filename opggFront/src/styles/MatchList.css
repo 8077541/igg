@@ -1,0 +1,83 @@
+.match-history {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--color-gray-800);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--color-purple-500);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .error-message {
+    padding: 1.5rem;
+    background-color: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid var(--color-red-500);
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .error-message button {
+    background-color: var(--color-red-500);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .error-message button:hover {
+    background-color: var(--color-red-400);
+  }
+  
+  .load-more-button {
+    background-color: var(--color-gray-700);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  
+  .load-more-button:hover {
+    background-color: var(--color-gray-600);
+  }
+  
+  .no-matches {
+    padding: 2rem;
+    background-color: var(--color-gray-800);
+    border-radius: 0.5rem;
+    text-align: center;
+    color: var(--color-gray-400);
+    font-size: 1.125rem;
+  }
+  
+  

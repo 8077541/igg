@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useParams, useSearchParams, Link } from "react-router-dom"
 import "../styles/ProfilePage.css"
+import MatchList from "../components/MatchList";
 
 // Extended mock data with detailed match information
 const mockProfile = {
@@ -160,33 +161,75 @@ function ProfilePage() {
   const [searchParams] = useSearchParams()
   const [profile, setProfile] = useState(null)
   const [expandedMatch, setExpandedMatch] = useState(null)
-
+  const [matchIds, setMatchIds] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [username, tag] = slug.split("-")
   const region = searchParams.get("region") || "kr"
+ useEffect(() => {
+    // Reset state when profile changes
+    setProfile(null)
+    setMatchIds([])
+    setLoading(true)
+    setError(null)
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5011/getFullProfile?gameName=${username}&tagLine=${tag}&region=${region}1`
-        )
+    // Fetch profile data
+    fetchProfileData()
+  }, [slug, region]) // Updated dependency array
 
-        const data = await response.json()
-        data.recentMatches = mockProfile.recentMatches
-        setProfile(data)
-        console.log(data)
-      } catch (error) {
-        console.error("Error fetching profile:", error)
-      }
+  const fetchProfileData = async () => {
+    setLoading(true)
+
+    try {
+      // In a real app, this would be an API call to fetch profile data
+      // For now, we'll simulate a delay and return mock data
+      const response = await fetch(
+        `http://localhost:5011/getFullProfile?gameName=${username}&tagLine=${tag}&region=${region}1`
+      )
+      const data = await response.json()
+
+      setProfile(data)
+
+      // Fetch match history IDs
+      await fetchMatchIds(data.puuid)
+    } catch (err) {
+      setError("Failed to load profile data")
+      console.error(err)
+    } finally {
+      setLoading(false)
     }
+  }
 
-    fetchProfile()
-  }, [username, tag, region])
+  const fetchMatchIds = async (puuid) => {
+    try {
+  
+      const response = await fetch(
+        `http://localhost:5011/getMatchIds?puuid=${puuid}`
+      )
+      const data = await response.json()
+      setMatchIds(data)
+    } catch (err) {
+      setError("Failed to load match history")
+      console.error(err)
+    }
+  }
 
-  if (!profile) {
+
+  if (loading && !profile) {
     return (
       <div className="loading-container">
         <div className="loading-text">Loading profile...</div>
+      </div>
+    )
+  }
+
+  if (error && !profile) {
+    return (
+      <div className="error-container">
+        <div className="error-message">{error}</div>
+        <button onClick={fetchProfileData} className="retry-button">
+          Retry
+        </button>
       </div>
     )
   }
@@ -287,158 +330,17 @@ function ProfilePage() {
             </div>
           </div>
 
-          {/* Match History Section */}
-          <div className="match-history">
-            {profile.recentMatches.map((match) => (
-              <div key={match.id} className={`match-card ${match.win ? "match-win" : "match-loss"}`}>
-                {/* Match Summary */}
-                <button onClick={() => toggleMatch(match.id)} className="match-summary">
-                  <div className="match-champion">
-                    <div className="champion-icon">
-                      <span>{match.champion.charAt(0)}</span>
-                      <div className="champion-level">{match.championLevel}</div>
-                    </div>
-                    <div className="champion-info">
-                      <div className="champion-name">{match.champion}</div>
-                      <div className="game-type">{match.gameType}</div>
-                    </div>
-                  </div>
-
-                  <div className="match-stats">
-                    <div className="match-result">
-                      <div className="result-text">{match.win ? "Victory" : "Defeat"}</div>
-                      <div className="time-ago">{match.timeAgo}</div>
-                    </div>
-
-                    <div className="match-kda">
-                      <div className="kda-numbers">
-                        {match.kills}/{match.deaths}/{match.assists}
-                      </div>
-                      <div className="kda-ratio">{match.kda} KDA</div>
-                    </div>
-
-                    <div className="match-cs">
-                      <div className="cs-numbers">{match.cs}</div>
-                      <div className="cs-per-min">{match.csPerMin} CS/m</div>
-                    </div>
-
-                    <div className="expand-icon">
-                      {expandedMatch === match.id ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polyline points="18 15 12 9 6 15"></polyline>
-                        </svg>
-                      ) : (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                      )}
-                    </div>
-                  </div>
-                </button>
-
-                {/* Expanded Match Details */}
-                {expandedMatch === match.id && (
-                  <div className="match-details">
-                    {/* Team Stats */}
-                    <div className="team-stats">
-                      <div className="blue-team-stats">
-                        <div className="team-kills">
-                          {match.teams.blue.reduce((acc, player) => acc + player.kills, 0)} Kills
-                        </div>
-                        <div className="team-gold">
-                          {match.teams.blue.reduce((acc, player) => acc + player.gold, 0).toLocaleString()} Gold
-                        </div>
-                      </div>
-                      <div className="red-team-stats">
-                        <div className="team-kills">
-                          {match.teams.red.reduce((acc, player) => acc + player.kills, 0)} Kills
-                        </div>
-                        <div className="team-gold">
-                          {match.teams.red.reduce((acc, player) => acc + player.gold, 0).toLocaleString()} Gold
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Teams */}
-                    <div className="teams-container">
-                      <div className="blue-team">
-                        {match.teams.blue.map((player, index) => (
-                          <div key={index} className="player-row">
-                            <div className="player-champion">
-                              <div className="player-icon">
-                                <span>{player.champion.charAt(0)}</span>
-                                <div className="player-level">{player.level}</div>
-                              </div>
-                              <div className="player-info">
-                                <div className="player-name">{player.name}</div>
-                                <div className="player-champion-name">{player.champion}</div>
-                              </div>
-                            </div>
-                            <div className="player-stats">
-                              <div className="player-kda">
-                                {player.kills}/{player.deaths}/{player.assists}
-                              </div>
-                              <div className="player-cs">{player.cs} CS</div>
-                              <div className="player-gold">{player.gold.toLocaleString()} g</div>
-                            </div>
-                            <div className="player-items">
-                              {player.items.map((item, i) => (
-                                <div key={i} className="item"></div>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="red-team">
-                        {match.teams.red.map((player, index) => (
-                          <div key={index} className="player-row">
-                            <div className="player-champion">
-                              <div className="player-icon">
-                                <span>{player.champion.charAt(0)}</span>
-                                <div className="player-level">{player.level}</div>
-                              </div>
-                              <div className="player-info">
-                                <div className="player-name">{player.name}</div>
-                                <div className="player-champion-name">{player.champion}</div>
-                              </div>
-                            </div>
-                            <div className="player-stats">
-                              <div className="player-kda">
-                                {player.kills}/{player.deaths}/{player.assists}
-                              </div>
-                              <div className="player-cs">{player.cs} CS</div>
-                              <div className="player-gold">{player.gold.toLocaleString()} g</div>
-                            </div>
-                            <div className="player-items">
-                              {player.items.map((item, i) => (
-                                <div key={i} className="item"></div>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          {matchIds.length > 0 ? (
+            <MatchList matchIds={matchIds} region={region} summonerName={profile?.gameName} />
+          ) : (
+            <div className="no-matches-container">
+              {loading ? (
+                <div className="loading-text">Loading match history...</div>
+              ) : (
+                <div className="no-matches">No match history found</div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

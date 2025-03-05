@@ -20,7 +20,7 @@ namespace opggApi.Controllers
         private readonly ISpellRepository _spellRepository = spellRepository;
 
         [HttpGet("getMatch")]
-        public async Task<IActionResult> GetMatch(string matchId)
+        public async Task<IActionResult> GetMatch([FromQuery] string matchId)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace opggApi.Controllers
         }
 
         [HttpGet("getMatchIds")]
-        public async Task<IActionResult> GetMatchIds(string puuid)
+        public async Task<IActionResult> GetMatchIds([FromQuery] string puuid)
         {
             try
             {

@@ -1,0 +1,270 @@
+.match-card {
+    background-color: var(--color-gray-800);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .match-win {
+    border-left: 4px solid var(--color-blue-500);
+  }
+  
+  .match-loss {
+    border-left: 4px solid var(--color-red-500);
+  }
+  
+  .match-summary {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .match-summary {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  
+  .match-champion {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+  
+  .champion-icon {
+    position: relative;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: var(--color-gray-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+  }
+  
+  .champion-level {
+    position: absolute;
+    bottom: -0.25rem;
+    right: -0.25rem;
+    background-color: #111827;
+    font-size: 0.75rem;
+    padding: 0 0.25rem;
+    border-radius: 9999px;
+  }
+  
+  .champion-name {
+    color: white;
+    font-weight: 500;
+  }
+  
+  .game-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.875rem;
+    color: var(--color-gray-400);
+  }
+  
+  @media (min-width: 640px) {
+    .game-info {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+  }
+  
+  .match-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .match-result .result-text {
+    font-weight: 700;
+  }
+  
+  .match-win .result-text {
+    color: var(--color-blue-400);
+  }
+  
+  .match-loss .result-text {
+    color: var(--color-red-400);
+  }
+  
+  .kda-numbers {
+    color: white;
+    font-weight: 700;
+  }
+  
+  .kda-ratio,
+  .cs-per-min {
+    font-size: 0.875rem;
+    color: var(--color-gray-400);
+  }
+  
+  .match-cs {
+    display: none;
+  }
+  
+  @media (min-width: 768px) {
+    .match-cs {
+      display: block;
+    }
+  }
+  
+  .cs-numbers {
+    color: white;
+    font-weight: 700;
+  }
+  
+  .expand-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-gray-400);
+  }
+  
+  /* Match Details Styles */
+  .match-details {
+    border-top: 1px solid var(--color-gray-700);
+  }
+  
+  .team-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    background-color: rgba(17, 24, 39, 0.5);
+  }
+  
+  .blue-team-stats {
+    text-align: center;
+    color: var(--color-blue-400);
+  }
+  
+  .red-team-stats {
+    text-align: center;
+    color: var(--color-red-400);
+  }
+  
+  .team-kills {
+    font-weight: 700;
+  }
+  
+  .blue-team {
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2));
+  }
+  
+  .red-team {
+    background: linear-gradient(to right, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+  }
+  
+  .player-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .player-row:hover {
+    background-color: rgba(31, 41, 55, 0.2);
+  }
+  
+  .current-player {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .player-champion {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .player-icon {
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--color-gray-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+  }
+  
+  .player-level {
+    position: absolute;
+    bottom: -0.25rem;
+    right: -0.25rem;
+    background-color: #111827;
+    font-size: 0.75rem;
+    padding: 0 0.25rem;
+    border-radius: 9999px;
+  }
+  
+  .player-info {
+    min-width: 7.5rem;
+  }
+  
+  .player-name {
+    color: white;
+    font-weight: 500;
+  }
+  
+  .player-champion-name {
+    font-size: 0.875rem;
+    color: var(--color-gray-400);
+  }
+  
+  .player-stats {
+    display: flex;
+    gap: 1rem;
+    color: var(--color-gray-300);
+    font-size: 0.875rem;
+  }
+  
+  .player-cs,
+  .player-gold {
+    display: none;
+  }
+  
+  @media (min-width: 768px) {
+    .player-cs,
+    .player-gold {
+      display: block;
+    }
+  }
+  
+  .player-items {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: auto;
+  }
+  
+  .item {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: var(--color-gray-700);
+    border-radius: 0.25rem;
+  }
+  
+  .match-error {
+    padding: 1rem;
+    color: var(--color-gray-400);
+    text-align: center;
+  }
+  
+  .match-card.loading {
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-gray-400);
+  }
+  
+  
