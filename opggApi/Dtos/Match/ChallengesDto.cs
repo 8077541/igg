@@ -13,7 +13,7 @@ namespace opggApi.Dtos.Match
         public float EarliestBaron { get; set; }
         public float EarliestDragonTakedown { get; set; }
         public float EarliestElderDragon { get; set; }
-        public float EarlyLaningPhaseGoldExpAdvantage { get; set; }
+        public int EarlyLaningPhaseGoldExpAdvantage { get; set; }
         public int FasterSupportQuestCompletion { get; set; }
         public float FastestLegendary { get; set; }
         public int HadAfkTeammate { get; set; }
@@ -54,7 +54,7 @@ namespace opggApi.Dtos.Match
         public int DodgeSkillShotsSmallWindow { get; set; }
         public int DoubleAces { get; set; }
         public int DragonTakedowns { get; set; }
-        public List<int>? LegendaryItemUsed { get; set; }
+        public List<int> LegendaryItemUsed { get; set; }
         public float EffectiveHealAndShielding { get; set; }
         public int ElderDragonKillsWithOpposingSoul { get; set; }
         public int ElderDragonMultikills { get; set; }
@@ -88,7 +88,7 @@ namespace opggApi.Dtos.Match
         public int KillsUnderOwnTurret { get; set; }
         public int KillsWithHelpFromEpicMonster { get; set; }
         public int KnockEnemyIntoTeamAndKill { get; set; }
-        public int KTurretsDestroyedBeforePlatesFall { get; set; }
+        public int KTurrentsDestroyedBeforePlatesFall { get; set; }
         public int LandSkillShotsEarlyGame { get; set; }
         public int LaneMinionsFirst10Minutes { get; set; }
         public int LostAnInhibitor { get; set; }
@@ -123,7 +123,7 @@ namespace opggApi.Dtos.Match
         public int SWARM_EvolveWeapon { get; set; }
         public int SWARM_Have3Passives { get; set; }
         public int SWARM_KillEnemy { get; set; }
-        public float SWARM_PickupGold { get; set; }
+        public int SWARM_PickupGold { get; set; }
         public int SWARM_ReachLevel50 { get; set; }
         public int SWARM_Survive15Min { get; set; }
         public int SWARM_WinWith5EvolvedWeapons { get; set; }

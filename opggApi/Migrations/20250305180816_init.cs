@@ -80,6 +80,27 @@ namespace opggApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SpellModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<int>(type: "int", nullable: false),
+                    ParticipantId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tooltip = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cooldown = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Range = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SpriteImage = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpellModel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ParticipantModel",
                 columns: table => new
                 {
@@ -158,6 +179,7 @@ namespace opggApi.Migrations
                     SecondaryRune1Stat0 = table.Column<int>(type: "int", nullable: false),
                     SecondaryRune1Stat1 = table.Column<int>(type: "int", nullable: false),
                     SecondaryRune1Stat2 = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false),
                     MatchModelMatchId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -170,47 +192,18 @@ namespace opggApi.Migrations
                         principalColumn: "MatchId");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "SpellModel",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<int>(type: "int", nullable: false),
-                    ParticipantId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Tooltip = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cooldown = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Range = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SpriteImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParticipantModelId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SpellModel", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SpellModel_ParticipantModel_ParticipantModelId",
-                        column: x => x.ParticipantModelId,
-                        principalTable: "ParticipantModel",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ParticipantModel_MatchModelMatchId",
                 table: "ParticipantModel",
                 column: "MatchModelMatchId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SpellModel_ParticipantModelId",
-                table: "SpellModel",
-                column: "ParticipantModelId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ParticipantModel");
+
             migrationBuilder.DropTable(
                 name: "ProfileModel");
 
@@ -219,9 +212,6 @@ namespace opggApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "SpellModel");
-
-            migrationBuilder.DropTable(
-                name: "ParticipantModel");
 
             migrationBuilder.DropTable(
                 name: "MatchModel");

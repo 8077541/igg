@@ -7,29 +7,21 @@ namespace opggApi.Dtos.Match
 {
     public class InfoDto
     {
-        public string EndOfGameResult { get; set; } = string.Empty;
+        public string EndOfGameResult { get; set; }
         public long GameCreation { get; set; }
-
         public long GameDuration { get; set; }
-
         public long GameEndTimestamp { get; set; }
-
         public long GameId { get; set; }
-
-        public string GameMode { get; set; } = string.Empty;
-
-        public string GameName { get; set; } = string.Empty;
+        public string GameMode { get; set; }
+        public string GameName { get; set; }
         public long GameStartTimestamp { get; set; }
-
-        public string GameType { get; set; } = string.Empty;
-        public string GameVersion { get; set; } = string.Empty;
+        public string GameType { get; set; }
+        public string GameVersion { get; set; }
         public int MapId { get; set; }
-
-        public List<ParticipantDto>? Participants { get; set; }
-        public string PlatformId { get; set; } = string.Empty;
+        public List<ParticipantDto> Participants { get; set; }
+        public string PlatformId { get; set; }
         public int QueueId { get; set; }
-        public List<TeamDto>? Teams { get; set; }
-
-        public string TournamentCode { get; set; } = string.Empty;
+        public List<TeamDto> Teams { get; set; }
+        public string TournamentCode { get; set; }
     }
 }

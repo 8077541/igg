@@ -60,7 +60,7 @@ function MatchList({ matchIds, region, summonerName }) {
 
   const fetchMatchData = async (matchId) => {
    
-    const response = await fetch(`http://localhost:5011/getMatch?matchId=EUW1_7326669386`)
+    const response = await fetch(`http://localhost:5011/getMatch?matchId=${matchId}`)
     const data = await response.json()
     console.log(data)
     return data

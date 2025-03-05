@@ -1,22 +1,21 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import "../styles/MatchCard.css"
 
-function MatchCard({ match, summonerName }) {
+function MatchCard({ match, summonerName, region }) {
   const [expanded, setExpanded] = useState(false)
   const [playerData, setPlayerData] = useState(null)
 
   useEffect(() => {
     // Find the player in the match data
-    if (match && match.teams) {
-        
-      // Look in both teams for the player
-      const blueTeamPlayer = match.teams.blue.find((p) => p.name === summonerName)
-      const redTeamPlayer = match.teams.red.find((p) => p.name === summonerName)
+    if (match && match.participants) {
+      // Look for the player by name in the participants array
+      const player = match.participants.find((p) => p.riotIdGameName === summonerName)
 
       // Set the player data
-      setPlayerData(blueTeamPlayer || redTeamPlayer)
+      setPlayerData(player)
     }
   }, [match, summonerName])
 
@@ -51,6 +50,15 @@ function MatchCard({ match, summonerName }) {
     return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`
   }
 
+  // Format game mode
+  const formatGameMode = (gameMode, queueId) => {
+    if (queueId === 420) return "Ranked Solo/Duo"
+    if (queueId === 440) return "Ranked Flex"
+    if (gameMode === "CLASSIC") return "Classic"
+    if (gameMode === "ARAM") return "ARAM"
+    return gameMode || "Unknown"
+  }
+
   // If match data isn't loaded yet
   if (!match) {
     return <div className="match-card loading">Loading match data...</div>
@@ -65,10 +73,10 @@ function MatchCard({ match, summonerName }) {
     )
   }
 
-  const isWin = match.win
+  const isWin = playerData.win
   const gameCreationDate = new Date(match.gameCreation)
-  const queueType = match.gameType || "Unknown Queue"
-  const timeAgo = match.timeAgo || formatTimeAgo(match.gameCreation)
+  const queueType = formatGameMode(match.gameMode, match.queueId)
+  const timeAgo = formatTimeAgo(match.gameCreation)
   const duration = formatDuration(match.gameDuration)
 
   return (
@@ -77,11 +85,15 @@ function MatchCard({ match, summonerName }) {
       <button onClick={toggleExpanded} className="match-summary">
         <div className="match-champion">
           <div className="champion-icon">
-            <span>{playerData.champion.charAt(0)}</span>
-            <div className="champion-level">{playerData.level}</div>
+            <img
+              src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${playerData.championId}.png`}
+              alt={playerData.championName}
+              className="champion-img"
+            />
+            <div className="champion-level">{playerData.champLevel}</div>
           </div>
           <div className="champion-info">
-            <div className="champion-name">{playerData.champion}</div>
+            <div className="champion-name">{playerData.championName}</div>
             <div className="game-info">
               <span className="game-type">{queueType}</span>
               <span className="game-time">
@@ -106,8 +118,10 @@ function MatchCard({ match, summonerName }) {
           </div>
 
           <div className="match-cs">
-            <div className="cs-numbers">{playerData.cs} CS</div>
-            <div className="cs-per-min">{(playerData.cs / (match.gameDuration / 60)).toFixed(1)} CS/m</div>
+            <div className="cs-numbers">{playerData.totalMinionsKilled} CS</div>
+            <div className="cs-per-min">
+              {(playerData.totalMinionsKilled / (match.gameDuration / 60)).toFixed(1)} CS/m
+            </div>
           </div>
 
           <div className="expand-icon">
@@ -146,15 +160,29 @@ function MatchCard({ match, summonerName }) {
           {/* Team Stats */}
           <div className="team-stats">
             <div className="blue-team-stats">
-              <div className="team-kills">{match.teams.blue.reduce((acc, player) => acc + player.kills, 0)} Kills</div>
+              <div className="team-kills">
+                {match.participants.filter((p) => p.teamId === 100).reduce((acc, player) => acc + player.kills, 0)}{" "}
+                Kills
+              </div>
               <div className="team-gold">
-                {match.teams.blue.reduce((acc, player) => acc + player.gold, 0).toLocaleString()} Gold
+                {match.participants
+                  .filter((p) => p.teamId === 100)
+                  .reduce((acc, player) => acc + player.goldEarned, 0)
+                  .toLocaleString()}{" "}
+                Gold
               </div>
             </div>
             <div className="red-team-stats">
-              <div className="team-kills">{match.teams.red.reduce((acc, player) => acc + player.kills, 0)} Kills</div>
+              <div className="team-kills">
+                {match.participants.filter((p) => p.teamId === 200).reduce((acc, player) => acc + player.kills, 0)}{" "}
+                Kills
+              </div>
               <div className="team-gold">
-                {match.teams.red.reduce((acc, player) => acc + player.gold, 0).toLocaleString()} Gold
+                {match.participants
+                  .filter((p) => p.teamId === 200)
+                  .reduce((acc, player) => acc + player.goldEarned, 0)
+                  .toLocaleString()}{" "}
+                Gold
               </div>
             </div>
           </div>
@@ -162,60 +190,102 @@ function MatchCard({ match, summonerName }) {
           {/* Teams */}
           <div className="teams-container">
             <div className="blue-team">
-              {match.teams.blue.map((player, index) => (
-                <div key={index} className={`player-row ${player.name === summonerName ? "current-player" : ""}`}>
-                  <div className="player-champion">
-                    <div className="player-icon">
-                      <span>{player.champion.charAt(0)}</span>
-                      <div className="player-level">{player.level}</div>
+              {match.participants
+                .filter((p) => p.teamId === 100)
+                .map((player, index) => (
+                  <div
+                    key={index}
+                    className={`player-row ${player.riotIdGameName === summonerName ? "current-player" : ""}`}
+                  >
+                    <div className="player-champion">
+                      <div className="player-icon">
+                        <img
+                          src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${player.championId}.png`}
+                          alt={player.championName}
+                          className="champion-img"
+                        />
+                        <div className="player-level">{player.champLevel}</div>
+                      </div>
+                      <div className="player-info">
+                        <Link
+                          to={`/profile/${player.riotIdGameName}${player.riotIdTagLine ? `-${player.riotIdTagLine}` : ""}?region=${region || "euw"}`}
+                          className="player-name-link"
+                        >
+                          {player.riotIdGameName}
+                        </Link>
+                        <div className="player-champion-name">{player.championName}</div>
+                      </div>
                     </div>
-                    <div className="player-info">
-                      <div className="player-name">{player.name}</div>
-                      <div className="player-champion-name">{player.champion}</div>
+                    <div className="player-stats">
+                      <div className="player-kda">
+                        {player.kills}/{player.deaths}/{player.assists}
+                      </div>
+                      <div className="player-cs">{player.totalMinionsKilled} CS</div>
+                      <div className="player-gold">{player.goldEarned.toLocaleString()} g</div>
+                    </div>
+                    <div className="player-items">
+                      {[player.item0, player.item1, player.item2, player.item3, player.item4, player.item5]
+                        .filter((item) => item !== 0)
+                        .map((item, i) => (
+                          <img
+                            key={i}
+                            src={`https://ddragon.leagueoflegends.com/cdn/15.4.1/img/item/${item}.png`}
+                            alt={`Item ${item}`}
+                            className="item-img"
+                          />
+                        ))}
                     </div>
                   </div>
-                  <div className="player-stats">
-                    <div className="player-kda">
-                      {player.kills}/{player.deaths}/{player.assists}
-                    </div>
-                    <div className="player-cs">{player.cs} CS</div>
-                    <div className="player-gold">{player.gold.toLocaleString()} g</div>
-                  </div>
-                  <div className="player-items">
-                    {player.items.map((item, i) => (
-                      <div key={i} className="item"></div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
             <div className="red-team">
-              {match.teams.red.map((player, index) => (
-                <div key={index} className={`player-row ${player.name === summonerName ? "current-player" : ""}`}>
-                  <div className="player-champion">
-                    <div className="player-icon">
-                      <span>{player.champion.charAt(0)}</span>
-                      <div className="player-level">{player.level}</div>
+              {match.participants
+                .filter((p) => p.teamId === 200)
+                .map((player, index) => (
+                  <div
+                    key={index}
+                    className={`player-row ${player.riotIdGameName === summonerName ? "current-player" : ""}`}
+                  >
+                    <div className="player-champion">
+                      <div className="player-icon">
+                        <img
+                          src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${player.championId}.png`}
+                          alt={player.championName}
+                          className="champion-img"
+                        />
+                        <div className="player-level">{player.champLevel}</div>
+                      </div>
+                      <div className="player-info">
+                        <Link
+                          to={`/profile/${player.riotIdGameName}${player.riotIdTagLine ? `-${player.riotIdTagLine}` : ""}?region=${region || "euw"}`}
+                          className="player-name-link"
+                        >
+                          {player.riotIdGameName}
+                        </Link>
+                        <div className="player-champion-name">{player.championName}</div>
+                      </div>
                     </div>
-                    <div className="player-info">
-                      <div className="player-name">{player.name}</div>
-                      <div className="player-champion-name">{player.champion}</div>
+                    <div className="player-stats">
+                      <div className="player-kda">
+                        {player.kills}/{player.deaths}/{player.assists}
+                      </div>
+                      <div className="player-cs">{player.totalMinionsKilled} CS</div>
+                      <div className="player-gold">{player.goldEarned.toLocaleString()} g</div>
+                    </div>
+                    <div className="player-items">
+                      {[player.item0, player.item1, player.item2, player.item3, player.item4, player.item5]
+                        .filter((item) => item !== 0)
+                        .map((item, i) => (
+                          <img
+                            key={i}
+                            src={`https://ddragon.leagueoflegends.com/cdn/14.18.1/img/item/${item}.png`}
+                            alt={`Item ${item}`}
+                            className="item-img"
+                          />
+                        ))}
                     </div>
                   </div>
-                  <div className="player-stats">
-                    <div className="player-kda">
-                      {player.kills}/{player.deaths}/{player.assists}
-                    </div>
-                    <div className="player-cs">{player.cs} CS</div>
-                    <div className="player-gold">{player.gold.toLocaleString()} g</div>
-                  </div>
-                  <div className="player-items">
-                    {player.items.map((item, i) => (
-                      <div key={i} className="item"></div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>

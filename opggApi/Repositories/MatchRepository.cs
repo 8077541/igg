@@ -39,11 +39,9 @@ namespace opggApi.Repositories
             var response = await _httpClient.GetAsync(
                 $"https://europe.api.riotgames.com/lol/match/v5/matches/{matchId}?api_key={riotApi}"
             );
-            var match = await response.Content.ReadFromJsonAsync<MatchDto>();
-            if (match == null)
-            {
-                throw new Exception("Match not found");
-            }
+            var match =
+                await response.Content.ReadFromJsonAsync<MatchDto>()
+                ?? throw new Exception("Match not found");
             var matchModel = MatchMapper.MatchDtoToMatch(match);
             return matchModel;
         }

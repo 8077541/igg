@@ -92,6 +92,8 @@ namespace opggApi.Models
         public int SecondaryRune1Stat1 { get; set; }
         public int SecondaryRune1Stat2 { get; set; }
 
+        public int TeamId { get; set; }
+
         [NotMapped]
         public List<RuneModel> Runes { get; set; } = new List<RuneModel>();
 

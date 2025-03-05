@@ -9,19 +9,17 @@ namespace opggApi.Dtos.Match
     {
         public int AllInPings { get; set; }
         public int AssistMePings { get; set; }
-
         public int Assists { get; set; }
-
         public int BaronKills { get; set; }
         public int BountyLevel { get; set; }
         public int ChampExperience { get; set; }
         public int ChampLevel { get; set; }
         public int ChampionId { get; set; }
-        public string ChampionName { get; set; } = string.Empty;
+        public string ChampionName { get; set; }
         public int CommandPings { get; set; }
         public int ChampionTransform { get; set; }
         public int ConsumablesPurchased { get; set; }
-        public ChallengesDto? Challenges { get; set; }
+        public ChallengesDto Challenges { get; set; }
         public int DamageDealtToBuildings { get; set; }
         public int DamageDealtToObjectives { get; set; }
         public int DamageDealtToTurrets { get; set; }
@@ -31,7 +29,6 @@ namespace opggApi.Dtos.Match
         public int DoubleKills { get; set; }
         public int DragonKills { get; set; }
         public bool EligibleForProgression { get; set; }
-
         public int EnemyMissingPings { get; set; }
         public int EnemyVisionPings { get; set; }
         public bool FirstBloodAssist { get; set; }
@@ -44,7 +41,7 @@ namespace opggApi.Dtos.Match
         public int GetBackPings { get; set; }
         public int GoldEarned { get; set; }
         public int GoldSpent { get; set; }
-        public string IndividualPosition { get; set; } = string.Empty;
+        public string IndividualPosition { get; set; }
         public int InhibitorKills { get; set; }
         public int InhibitorTakedowns { get; set; }
         public int InhibitorsLost { get; set; }
@@ -58,7 +55,7 @@ namespace opggApi.Dtos.Match
         public int ItemsPurchased { get; set; }
         public int KillingSprees { get; set; }
         public int Kills { get; set; }
-        public string? Lane { get; set; }
+        public string Lane { get; set; }
         public int LargestCriticalStrike { get; set; }
         public int LargestKillingSpree { get; set; }
         public int LargestMultiKill { get; set; }
@@ -66,7 +63,7 @@ namespace opggApi.Dtos.Match
         public int MagicDamageDealt { get; set; }
         public int MagicDamageDealtToChampions { get; set; }
         public int MagicDamageTaken { get; set; }
-        public MissionsDto? Missions { get; set; }
+        public MissionsDto Missions { get; set; }
         public int NeutralMinionsKilled { get; set; }
         public int NeedVisionPings { get; set; }
         public int NexusKills { get; set; }
@@ -89,12 +86,9 @@ namespace opggApi.Dtos.Match
         public int PlayerScore10 { get; set; }
         public int PlayerScore11 { get; set; }
         public int PentaKills { get; set; }
-
-        public PerksDto? Perks { get; set; }
-
+        public PerksDto Perks { get; set; }
         public int PhysicalDamageDealt { get; set; }
         public int PhysicalDamageDealtToChampions { get; set; }
-
         public int PhysicalDamageTaken { get; set; }
         public int Placement { get; set; }
         public int PlayerAugment1 { get; set; }
@@ -104,42 +98,33 @@ namespace opggApi.Dtos.Match
         public int PlayerSubteamId { get; set; }
         public int PushPings { get; set; }
         public int ProfileIcon { get; set; }
-        public string Puuid { get; set; } = string.Empty;
-
+        public string Puuid { get; set; }
         public int QuadraKills { get; set; }
-        public string RiotIdGameName { get; set; } = string.Empty;
-        public string RiotIdName { get; set; } = string.Empty;
-
-        public string RiotIdTagline { get; set; } = string.Empty;
-
-        public string Role { get; set; } = string.Empty;
+        public string RiotIdGameName { get; set; }
+        public string RiotIdTagline { get; set; }
+        public string Role { get; set; }
         public int SightWardsBoughtInGame { get; set; }
         public int Spell1Casts { get; set; }
         public int Spell2Casts { get; set; }
         public int Spell3Casts { get; set; }
         public int Spell4Casts { get; set; }
-
         public int SubteamPlacement { get; set; }
         public int Summoner1Casts { get; set; }
         public int Summoner1Id { get; set; }
         public int Summoner2Casts { get; set; }
-
         public int Summoner2Id { get; set; }
-        public string SummonerId { get; set; } = string.Empty;
-
+        public string SummonerId { get; set; }
         public int SummonerLevel { get; set; }
-        public string SummonerName { get; set; } = string.Empty;
-
+        public string SummonerName { get; set; }
         public bool TeamEarlySurrendered { get; set; }
         public int TeamId { get; set; }
-        public string TeamPosition { get; set; } = string.Empty;
+        public string TeamPosition { get; set; }
         public int TimeCCingOthers { get; set; }
         public int TimePlayed { get; set; }
         public int TotalAllyJungleMinionsKilled { get; set; }
         public int TotalDamageDealt { get; set; }
         public int TotalDamageDealtToChampions { get; set; }
         public int TotalDamageShieldedOnTeammates { get; set; }
-
         public int TotalDamageTaken { get; set; }
         public int TotalEnemyJungleMinionsKilled { get; set; }
         public int TotalHeal { get; set; }
@@ -147,7 +132,7 @@ namespace opggApi.Dtos.Match
         public int TotalMinionsKilled { get; set; }
         public int TotalTimeCCDealt { get; set; }
         public int TotalTimeSpentDead { get; set; }
-        public int TotalUnisHealed { get; set; }
+        public int TotalUnitsHealed { get; set; }
         public int TripleKills { get; set; }
         public int TrueDamageDealt { get; set; }
         public int TrueDamageDealtToChampions { get; set; }
@@ -160,7 +145,7 @@ namespace opggApi.Dtos.Match
         public int VisionClearedPings { get; set; }
         public int VisionWardsBoughtInGame { get; set; }
         public int WardsKilled { get; set; }
-        public int WardsPlace { get; set; }
+        public int WardsPlaced { get; set; }
         public bool Win { get; set; }
     }
 }

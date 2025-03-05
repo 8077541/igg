@@ -270,6 +270,9 @@ namespace opggApi.Migrations
                     b.Property<int>("SummonerSpell2")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TotalDamageDealt")
                         .HasColumnType("int");
 
@@ -437,9 +440,6 @@ namespace opggApi.Migrations
                     b.Property<int>("ParticipantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParticipantModelId")
-                        .HasColumnType("int");
-
                     b.PrimitiveCollection<string>("Range")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -454,8 +454,6 @@ namespace opggApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParticipantModelId");
-
                     b.ToTable("SpellModel");
                 });
 
@@ -466,21 +464,9 @@ namespace opggApi.Migrations
                         .HasForeignKey("MatchModelMatchId");
                 });
 
-            modelBuilder.Entity("opggApi.Models.SpellModel", b =>
-                {
-                    b.HasOne("opggApi.Models.ParticipantModel", null)
-                        .WithMany("Spells")
-                        .HasForeignKey("ParticipantModelId");
-                });
-
             modelBuilder.Entity("opggApi.Models.MatchModel", b =>
                 {
                     b.Navigation("Participants");
-                });
-
-            modelBuilder.Entity("opggApi.Models.ParticipantModel", b =>
-                {
-                    b.Navigation("Spells");
                 });
 #pragma warning restore 612, 618
         }

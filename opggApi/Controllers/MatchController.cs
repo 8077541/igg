@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using opggApi.Interfaces;
 
 namespace opggApi.Controllers
@@ -12,12 +13,14 @@ namespace opggApi.Controllers
     public class MatchController(
         IMatchRepository matchRepository,
         IRuneRepository runeRepository,
-        ISpellRepository spellRepository
+        ISpellRepository spellRepository,
+        ILogger<MatchController> logger
     ) : ControllerBase
     {
         private readonly IMatchRepository _matchRepository = matchRepository;
         private readonly IRuneRepository _runeRepository = runeRepository;
         private readonly ISpellRepository _spellRepository = spellRepository;
+        private readonly ILogger<MatchController> _logger = logger;
 
         [HttpGet("getMatch")]
         public async Task<IActionResult> GetMatch([FromQuery] string matchId)
@@ -27,11 +30,18 @@ namespace opggApi.Controllers
                 var match = await _matchRepository.GetMatchFromDb(matchId);
                 if (match != null)
                 {
+                    _logger.LogInformation("Match found in database");
                     return Ok(match);
                 }
                 else
                 {
                     var matchData = await _matchRepository.GetMatch(matchId);
+                    _logger.LogInformation("Fetching match from repo");
+                    Console.WriteLine(matchData);
+                    if (matchData == null)
+                    {
+                        return NotFound();
+                    }
                     foreach (var participant in matchData.Participants)
                     {
                         participant.Runes = await _runeRepository.AddRunesToParticipant(
