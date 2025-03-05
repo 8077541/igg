@@ -79,6 +79,7 @@ function MatchCard({ match, summonerName, region }) {
   const timeAgo = formatTimeAgo(match.gameCreation)
   const duration = formatDuration(match.gameDuration)
 
+
   return (
     <div className={`match-card ${isWin ? "match-win" : "match-loss"}`}>
       {/* Match Summary */}
@@ -223,17 +224,58 @@ function MatchCard({ match, summonerName, region }) {
                       <div className="player-cs">{player.totalMinionsKilled} CS</div>
                       <div className="player-gold">{player.goldEarned.toLocaleString()} g</div>
                     </div>
-                    <div className="player-items">
-                      {[player.item0, player.item1, player.item2, player.item3, player.item4, player.item5]
-                        .filter((item) => item !== 0)
-                        .map((item, i) => (
-                          <img
-                            key={i}
-                            src={`https://ddragon.leagueoflegends.com/cdn/15.4.1/img/item/${item}.png`}
-                            alt={`Item ${item}`}
-                            className="item-img"
-                          />
+
+                    <div className="player-build">
+                      {/* Runes */}
+                      <div className="player-runes">
+                        {player.runes.map((rune, i) => (
+                          <div key={`rune-${i}`} className="rune-slot">
+                            <img
+                              src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/${rune.image.toLowerCase()}`}
+                              alt={`Rune ${rune.id}`}
+                              className="rune-img"
+                            />
+                          </div>
                         ))}
+                      </div>
+
+                      {/* Summoner Spells */}
+                      <div className="player-summoners">
+                        {player.spells.map((summoner, i) => (
+                          <div key={`summoner-${i}`} className="summoner-slot">
+                            <img
+                              src={`https://ddragon.leagueoflegends.com/cdn/15.5.1/img/spell/${summoner.fullImage}`}
+                              alt={`Summoner ${summoner.id}`}
+                              className="summoner-img"
+                            />
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Items */}
+                      <div className="player-items">
+                        {[
+                          player.item0,
+                          player.item1,
+                          player.item2,
+                          player.item3,
+                          player.item4,
+                          player.item5,
+                          player.item6,
+                        ].map((item, i) => (
+                          <div key={i} className={`item-slot ${i === 6 ? "trinket-slot" : ""}`}>
+                            {item !== 0 ? (
+                              <img
+                                src={`https://ddragon.leagueoflegends.com/cdn/14.18.1/img/item/${item}.png`}
+                                alt={`Item ${item}`}
+                                className="item-img"
+                              />
+                            ) : (
+                              <div className="empty-item"></div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -272,17 +314,59 @@ function MatchCard({ match, summonerName, region }) {
                       <div className="player-cs">{player.totalMinionsKilled} CS</div>
                       <div className="player-gold">{player.goldEarned.toLocaleString()} g</div>
                     </div>
-                    <div className="player-items">
-                      {[player.item0, player.item1, player.item2, player.item3, player.item4, player.item5]
-                        .filter((item) => item !== 0)
-                        .map((item, i) => (
-                          <img
-                            key={i}
-                            src={`https://ddragon.leagueoflegends.com/cdn/14.18.1/img/item/${item}.png`}
-                            alt={`Item ${item}`}
-                            className="item-img"
-                          />
+
+                    <div className="player-build">
+                      {/* Runes */}
+                      <div className="player-runes">
+                        {player.runes.map((rune, i) => (
+                        
+                          <div key={`rune-${i}`} className="rune-slot">
+                            <img
+                              src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/${rune.image.toLowerCase()}`}
+                              alt={`Rune ${rune.id}`}
+                              className="rune-img"
+                            />
+                          </div>
                         ))}
+                      </div>
+
+                      {/* Summoner Spells */}
+                      <div className="player-summoners">
+                        {player.spells.map((summoner, i) => (
+                          <div key={`summoner-${i}`} className="summoner-slot">
+                            <img
+                              src={`https://ddragon.leagueoflegends.com/cdn/15.5.1/img/spell/${summoner.fullImage}`}
+                              alt={`Summoner ${summoner.id}`}
+                              className="summoner-img"
+                            />
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Items */}
+                      <div className="player-items">
+                        {[
+                          player.item0,
+                          player.item1,
+                          player.item2,
+                          player.item3,
+                          player.item4,
+                          player.item5,
+                          player.item6,
+                        ].map((item, i) => (
+                          <div key={i} className={`item-slot ${i === 6 ? "trinket-slot" : ""}`}>
+                            {item !== 0 ? (
+                              <img
+                                src={`https://ddragon.leagueoflegends.com/cdn/15.5.1/img/item/${item}.png`}
+                                alt={`Item ${item}`}
+                                className="item-img"
+                              />
+                            ) : (
+                              <div className="empty-item"></div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}

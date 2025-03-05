@@ -249,7 +249,7 @@ function ProfilePage() {
   const toggleMatch = (matchId) => {
     setExpandedMatch(expandedMatch === matchId ? null : matchId)
   }
-
+  const winRate = Math.trunc((profile?.soloWins / (profile?.soloWins + profile?.soloLosses)) * 100);
   return (
     <div className="profile-page">
       <div className="container">
@@ -278,7 +278,17 @@ function ProfilePage() {
             {/* Summoner Info Card */}
             <div className="summoner-card">
               <div className="summoner-header">
-                <div className="avatar">{profile.gameName.charAt(0).toUpperCase()}</div>
+              <div className="avatar">
+                  {profile?.profileIconId ? (
+                    <img
+                      src={`http://ddragon.leagueoflegends.com/cdn/15.5.1/img/profileicon/${profile.profileIconId}.png`}
+                      alt="Summoner Icon"
+                      className="avatar-img"
+                    />
+                  ) : (
+                    profile?.username.charAt(0).toUpperCase()
+                  )}
+                </div>
                 <div className="summoner-details">
                   <h1 className="summoner-name">{profile.gameName}</h1>
                   <div className="summoner-tag">#{profile.tagLine}</div>
@@ -324,6 +334,30 @@ function ProfilePage() {
                   </svg>
                   <span className={`rank ${getRankColor(profile.soloTier)}`}>
                     {profile.soloTier} {profile.soloRank} ({profile.soloLeaguePoints} LP)
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="stat-icon"
+                  >
+                    <path d="M12 22V8"></path>
+                    <path d="m5 12 7-4 7 4"></path>
+                    <path d="M5 3h14"></path>
+                    <path d="M5 8h14"></path>
+                  </svg>
+                  <span>
+                    <span className="win-loss">
+                      <span className="wins">{profile?.soloWins}W</span> /{" "}
+                      <span className="losses">{profile?.soloLosses}L</span>
+                    </span>
+                    <span className="win-rate">Win Rate: {winRate}%</span>
                   </span>
                 </div>
               </div>

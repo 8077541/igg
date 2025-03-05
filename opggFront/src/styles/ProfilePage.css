@@ -70,13 +70,20 @@
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
-  background-color: var(--color-amber-500);
+  background-color: var(--color-gray-700);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.875rem;
   font-weight: 700;
   color: white;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .summoner-details {
@@ -413,5 +420,25 @@
 .loading-text {
   color: white;
   font-size: 1.25rem;
+}
+
+.win-loss {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.wins {
+  color: var(--color-blue-400);
+}
+
+.losses {
+  color: var(--color-red-400);
+}
+
+.win-rate {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-gray-400);
 }
 
